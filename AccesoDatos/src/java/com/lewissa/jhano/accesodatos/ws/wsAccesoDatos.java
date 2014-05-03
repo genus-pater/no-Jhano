@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package com.lewissa.jhano.accesodatos.ws;
-
 import com.lewissa.jhano.accesodatos.cAccesoDatos;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -26,25 +25,13 @@ public class wsAccesoDatos {
         Boolean flag1 = false; // revisa la respuesta de la base
         Boolean flag2 = false; // revisa la conexion
         cAccesoDatos accConexion = new cAccesoDatos();
-        if (accConexion.conectaDataBase()) {
-            /*flag2 = true; // conexion correcta
-            if (accConexion.actualizaDataBase(strSql)) {
-                flag1 = true; //respuesta correcta de la base
-            } else {
-                flag1 = false; //respuesta de error en la insercion
-            }*/
-            return false;
+        if (!accConexion.conectaDataBase()) {
+            flag2 = false; //error en la conexion
         } else {
-            //flag2 = false; //error en la conexion
-            return true;
+            flag2 = true; // conexion correcta
+            flag1 = accConexion.actualizaDataBase(strSql);
         }
-        /*//si la conexion y la insercion fueron correctos
-        if ((flag1.equals(true)) && (flag2.equals(true))) {
-            flag1 = true;
-        } else //si alguna de las 2 dio error
-        {
-            flag1 = false;
-        }
-        return flag1;*/
+        flag1 = (flag1.equals(true)) && (flag2.equals(true));
+        return flag1;
     }
 }
